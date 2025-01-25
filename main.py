@@ -1,72 +1,63 @@
-from random import * 
-import copy 
+from random import randrange
+import copy
 
-def getLen() : 
-    len = input()
-    while(len.isnumeric() == False) :
-        print("Invalid input , Please enter a number :") 
-        len = input()
+def getLen():
+    length = input("Enter the length of the disk arrays: ")
+    while not length.isnumeric():
+        print("Invalid input, please enter a number:")
+        length = input()
 
-    return int(len)
+    return int(length)
 
-def generateDisks(len) :  #N^2
-    largeDisks = [] 
-    smallDisks = [] 
-    insertIdx  = randrange( len - 1 )
-    for i in range(len) : 
-        largeDisks.append(randrange(1,5)) # N + 1 
-        smallDisks.append(randrange(1,4)) # N 
-    smallDisks[insertIdx] = 0 
-    return largeDisks , smallDisks
+def generateDisks(length):  # Generate large and small disks
+    largeDisks = []
+    smallDisks = []
+    insertIdx = randrange(length - 1)
+    for i in range(length):
+        largeDisks.append(randrange(1, 5))  # Large disks labeled from 1 to 4
+        smallDisks.append(randrange(1, 4))  # Small disks labeled from 1 to 3
+    smallDisks[insertIdx] = 0  # Place a "0" randomly in small disks
+    return largeDisks, smallDisks
 
-def finalConfig(a) :
-    b = copy.deepcopy(a)
-    b.remove(0)
-    retVal = sorted(b)
-    retVal.append(0)
-    return retVal
-    # print("Target Configuration: " , test)
-
-def calcDiff( smallDisks , finalConfig ) : 
-    print("Smaller Disks : " , smallDisks )
-    print("Target        : " , finalConfig )
-    print(" Legnth " , len(smallDisks))
-    retVal = []
-    for i in range(len(smallDisks)) : 
-        if smallDisks[i] == finalConfig[i] : 
-            retVal.append(0)
-        else: 
-            retVal.append(1)
+def finalConfig(smallDisks):
+    b = copy.deepcopy(smallDisks)
+    b.remove(0)  # Remove the 0 temporarily
+    retVal = sorted(b)  # Sort the rest
+    retVal.append(0)  # Append 0 at the end
     return retVal
 
-def getIndex(a) :
-    return a.index(0)
+def getIndex(a):
+    return a.index(0)  # Find the index of the uncovered large disk
 
+def moveDisk(smallDisks, idxFrom, idxTo):
+    """Move a small disk from one index to another."""
+    smallDisks[idxTo] = smallDisks[idxFrom]
+    smallDisks[idxFrom] = 0  # Set the original position to uncovered (0)
 
-# Finish this later ig 
+ 
 
-def calculateStep( idx , small , large ) : 
-    if idx < 1 : 
-        idx = len(small) - idx 
-    step = large[idx]
-    val = small[ idx + step ] 
-    idxLeftArr  = diffArr
-    idxRightArr = diffArr
-    return 
+def bestFitSearch(largeDisk, smallDisk, goalConfig):
+    """Perform the best fit search to solve the puzzle."""
 
-def main() : 
-    len = getLen()
-    largeDisks , smallDisks = generateDisks(len)
+    while smallDisk != goalConfig:
+        zeroIdx = getIndex(smallDisk)  # Get the index of the uncovered large disk
+        spacesToMove = largeDisk[zeroIdx] # Wherever the 0 is in the small disk we want the equivalent in large disk
+        smallDisk.insert(spacesToMove, 0)
+        if smallDisk == goalConfig:
+            break
+    
+
+def main():
+    length = getLen()
+    largeDisks, smallDisks = generateDisks(length)
     finalCFG = finalConfig(smallDisks)
-    idx = getIndex(smallDisks)
-    diffArr = calcDiff( smallDisks , finalCFG )
-    print("Large : " , largeDisks)
-    print("Small : " , smallDisks)
-    print("Goal  : " , finalCFG  )
 
+    print("Initial Configuration:")
+    print("Large Disks: ", " ".join(map(str, largeDisks)))
+    print("Small Disks: ", " ".join(map(str, smallDisks)))
+    print("Goal Configuration: ", " ".join(map(str, finalCFG)))
 
-# if '__name__' == '__main__' : 
-main()
+    bestFitSearch(largeDisks, smallDisks, finalCFG)
 
-
-
+if __name__ == "__main__":
+    main()
