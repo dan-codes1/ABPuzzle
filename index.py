@@ -56,10 +56,11 @@ class AB:
             new_state[zero_idx], new_state[new_index] = new_state[new_index], new_state[zero_idx]
             neighbors.append(new_state)
 
-        swap_and_create((zero_idx - move) % len(state))
-        swap_and_create((zero_idx + move) % len(state))
-        swap_and_create((zero_idx - 1) % len(state))
-        swap_and_create((zero_idx + 1) % len(state))
+        state_size = len(state)
+        swap_and_create((zero_idx - move) % state_size)
+        swap_and_create((zero_idx + move) % state_size)
+        swap_and_create((zero_idx - 1) % state_size)
+        swap_and_create((zero_idx + 1) % state_size)
         return neighbors
 
     def get_path(self, parent_map: dict[(int), [int]], end_state: [int]) -> [[int]]:
