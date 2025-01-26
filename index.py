@@ -3,7 +3,7 @@ import heapq
 import random
 
 
-class ABPuzzle:
+class AB:
     def __init__(self, n: int):
         self.n = n
         self.large_disks = []
@@ -102,7 +102,7 @@ class ABPuzzle:
 
 if __name__ == "__main__":
     n = int(sys.argv[1])
-    puzzle = ABPuzzle(n)
+    puzzle = AB(n)
     solution = puzzle.solve()
     print("Large disks:", puzzle.large_disks)
     print("Small disks:", puzzle.small_disks)
