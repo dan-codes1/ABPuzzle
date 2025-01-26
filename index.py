@@ -47,7 +47,7 @@ class AB:
 
     def get_possible_moves(self, state: [int]) -> [[int]]:
         zero_idx = state.index(0)
-        k = self.large_disks[zero_idx]
+        move = self.large_disks[zero_idx]
         neighbors = []
 
         def swap_and_create(new_index: int):
@@ -56,8 +56,8 @@ class AB:
             new_state[zero_idx], new_state[new_index] = new_state[new_index], new_state[zero_idx]
             neighbors.append(new_state)
 
-        swap_and_create((zero_idx - k) % len(state))
-        swap_and_create((zero_idx + k) % len(state))
+        swap_and_create((zero_idx - move) % len(state))
+        swap_and_create((zero_idx + move) % len(state))
         swap_and_create((zero_idx - 1) % len(state))
         swap_and_create((zero_idx + 1) % len(state))
         return neighbors
