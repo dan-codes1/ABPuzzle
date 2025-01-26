@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Check if the user provided an argument
+if [ $# -ne 1 ]; then
+  echo "Usage: ./AB n"
+  exit 1
+fi
+
+# Call the Python script with the argument
+python index.py $1
