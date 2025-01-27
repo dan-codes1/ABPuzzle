@@ -1,10 +1,16 @@
 #!/bin/bash
 
-# Check if the user provided an argument
 if [ $# -ne 1 ]; then
   echo "Usage: ./AB n"
   exit 1
 fi
 
-# Call the Python script with the argument
+if [ $1 -gt 4 ]; then
+  echo ""
+  echo "$1 is a large number and might take some time to solve. Consider reducing it if the puzzle takes a lot of time."
+fi
+
+echo ""
+echo "Welcome to the AB Puzzle"
+echo ""
 python index.py $1

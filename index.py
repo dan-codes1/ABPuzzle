@@ -104,9 +104,9 @@ class AB:
 if __name__ == "__main__":
     n = int(sys.argv[1])
     puzzle = AB(n)
-    solution = puzzle.solve()
     print("Large disks:", puzzle.large_disks)
     print("Small disks:", puzzle.small_disks)
+    solution = puzzle.solve()
     print()
     if solution:
         print("Solution is")
