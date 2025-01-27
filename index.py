@@ -63,9 +63,9 @@ class AB:
         swap_and_create((zero_idx + 1) % state_size)
         return neighbors
 
-    def get_path(self, parent_map: dict[(int), [int]], end_state: [int]) -> [[int]]:
+    def get_path(self, parent_map: dict[(int), [int]], state: [int]) -> [[int]]:
         path = []
-        curr = end_state
+        curr = state
         while curr is not None:
             path.append(curr)
             curr = parent_map[tuple(curr)]
